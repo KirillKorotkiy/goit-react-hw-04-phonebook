@@ -1,47 +1,50 @@
 import React from 'react';
-import { ContainerForm, ButtonForm, InputForm, Error } from './ContactsForm.styled';
-import { Formik,  } from 'formik';
-import * as yup from 'yup';
-
-
-const schema = yup.object().shape({
-  name: yup.string().required(),
-  number: yup.number().required(),
-});
-
-const values = {
-  name: '',
-  number: '',
-};
+import { useForm } from 'react-hook-form';
+import { ContainerForm, InputForm, ButtonForm } from './ContactsForm.styled';
 
 const ContactsForm = ({ onSubmit }) => {
-  const handleSubmit = (values, { resetForm }) => {
-    onSubmit(values);
-    resetForm();
-  };
+  const {
+    register,
+    handleSubmit,
+  } = useForm();
 
   return (
-    <>
-      <Formik
-        initialValues={values}
-        onSubmit={handleSubmit}
-        validationSchema={schema}
+    <ContainerForm>
+      <form
+        onSubmit={handleSubmit(data => {
+          onSubmit(data);
+        })}
       >
-        <ContainerForm autoComplete="off">
-          <label htmlFor="name">
-            <h3>Name</h3>
-            <InputForm type="text" name="name" />
-          </label>
-          <Error name='name' component={"p"} />
-          <label>
-            <h3>Number</h3>
-            <InputForm htmlFor="number" type="tel" name="number" />
-          </label>
-          <Error name='number' component={"p"}/>
-          <ButtonForm type="submit">Add contacts</ButtonForm>
-        </ContainerForm>
-      </Formik>
-    </>
+        <label htmlFor="name">
+          <h3>Name</h3>
+          <InputForm
+            type="text"
+            name="name"
+            {...register('name', {
+              register: true,
+              minLength: 3,
+              required: 'This is required',
+            })}
+            placeholder="Name"
+          />
+        </label>
+        <label>
+          <h3>Number</h3>
+          <InputForm
+            htmlFor="number"
+            type="tel"
+            name="number"
+            {...register('number', {
+              register: true,
+              minLength: 6,
+              required: 'This is required',
+            })}
+            placeholder="Number"
+          />
+        </label>
+        <ButtonForm type="submit">Add contacts</ButtonForm>
+      </form>
+      </ContainerForm>
   );
 };
 

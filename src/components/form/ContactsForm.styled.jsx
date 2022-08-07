@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { Form, Field, ErrorMessage } from 'formik';
 
-export const ContainerForm = styled(Form)`
+
+export const ContainerForm = styled.div`
     border: 1px solid black;
     width: 300px;
     margin-bottom: 30px;
@@ -10,17 +10,14 @@ export const ContainerForm = styled(Form)`
     padding: 10px;
 `
 
-export const InputForm = styled(Field)`
-    height: 25px;
+export const InputForm = styled.input`
+    height: 30px;
     width: 100%;
     margin-bottom: 5px;
     
 `
 export const ButtonForm = styled.button`
-     height: 25px;
+     height: 30px;
+     width: 100%;
     
-`
-export const Error = styled(ErrorMessage)`
-color:red;
-margin: 10px 0px;
 `
